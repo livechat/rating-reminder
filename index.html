@@ -31,8 +31,6 @@
           href='https://app.chat.io/direct/favicon.ico' />
 
     <title>LiveChat Rating Reminder</title>
-    <script>
-    </script>
 
     <style>
         @import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:300');
@@ -116,6 +114,126 @@
         </div>
     </div>
 </div>
+
+<div id="lc-rating-reminder">
+    <img src="https://cdn.livechatinc.com/s3/3358262/all/thumbup.gif" alt="Rate us!">
+    <span>Rate this chat to help us become better support.</span>
+    <span id="lc-rating-reminder-close">+</span>
+</div>
+<!-- LiveChat tracking code -->
+<script type="text/javascript">
+    window.__lc = window.__lc || {};
+    window.__lc.license = 8656216;
+    window.__lc.ga_version = 'ga';
+    (function() {
+        var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+        lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + '<?php echo URL_CDN_OLD; ?>staging/tracking.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+    })();
+</script>
+<!-- Rating Reminder -->
+<script>
+    window.lcRatingReminder = {
+        ratingCookie: null,
+        ratingTimeout: null,
+        leftHeight: null,
+        matchMediaLeft: null,
+        rateDelay: 1000,
+        showRatingReminder: function(ratingCookieVar) {
+            if (ratingCookieVar !== undefined && ratingCookieVar !== 'false' && LC_API.chat_window_maximized()) {
+                if(ratingCookieVar <= Date.now())
+                    $('#lc-rating-reminder').show();
+                else {
+                    var timeout = ratingCookieVar - Date.now();
+                    lcRatingReminder.ratingTimeout = setTimeout(function(){
+                        $('#lc-rating-reminder').show();
+                    }, timeout);
+                }
+            }
+        },
+        mediaCheck: function() {
+            lcRatingReminder.leftHeight = $('#livechat-full').height();
+            lcRatingReminder.matchMediaLeft = window.matchMedia('(max-height:' + ((lcRatingReminder.leftHeight) + 75) + 'px)').matches;
+            if(lcRatingReminder.matchMediaLeft) {
+                $('#lc-rating-reminder').addClass('left');
+                $('#lc-rating-reminder').css('bottom', (lcRatingReminder.leftHeight - 7.25*14) + 'px');
+            } else {
+                $('#lc-rating-reminder').removeClass('left');
+                $('#lc-rating-reminder').css('bottom', '');
+            }
+        },
+        init: function() {
+            window.LC_API = window.LC_API || {};
+            LC_API.on_after_load = function(){
+                lcRatingReminder.mediaCheck();
+                lcRatingReminder.ratingCookie = Cookies.get('lc-rating-reminder');
+                if(LC_API.chat_running() && lcRatingReminder.ratingCookie === undefined) {
+                    Cookies.set('lc-rating-reminder', Date.now() + lcRatingReminder.rateDelay, {expires: 1});
+                    lcRatingReminder.ratingCookie = Cookies.get('lc-rating-reminder');
+                }
+            };
+            LC_API.on_chat_window_opened = function () {
+                setTimeout(function () {
+                    if (lcRatingReminder.ratingCookie !== undefined) {
+                        if (LC_API.chat_running()) {
+                            lcRatingReminder.showRatingReminder(lcRatingReminder.ratingCookie);
+                        } else
+                            Cookies.remove('lc-rating-reminder');
+                    }
+                }, 500);
+            };
+            LC_API.on_chat_window_minimized = function () {
+                $('#lc-rating-reminder').hide();
+            };
+            LC_API.on_chat_started = function() {
+                lcRatingReminder.mediaCheck();
+                if (lcRatingReminder.ratingCookie === undefined) {
+                    Cookies.set('lc-rating-reminder', Date.now()+lcRatingReminder.rateDelay, { expires: 1 });
+                    lcRatingReminder.showRatingReminder(Date.now()+lcRatingReminder.rateDelay);
+                }
+            };
+            LC_API.on_chat_ended = function() {
+                Cookies.remove('lc-rating-reminder');
+                $('#lc-rating-reminder').hide();
+            };
+            LC_API.on_rating_submitted = function(data) {
+                if (data !== 'none') {
+                    $('#lc-rating-reminder').hide();
+                    Cookies.set('lc-rating-reminder', false);
+                    clearTimeout(lcRatingReminder.ratingTimeout);
+                } else {
+                    lcRatingReminder.mediaCheck();
+                    Cookies.set('lc-rating-reminder', Date.now()+lcRatingReminder.rateDelay, { expires: 1 });
+                    lcRatingReminder.showRatingReminder(Date.now()+lcRatingReminder.rateDelay);
+                }
+            };
+            $('#lc-rating-reminder-close').click(function(){
+                $('#lc-rating-reminder').hide();
+                Cookies.set('lc-rating-reminder', false);
+            });
+            $( window ).resize(function() {
+                lcRatingReminder.mediaCheck();
+            });
+            setInterval(function(){
+                lcRatingReminder.mediaCheck();
+                lcRatingReminder.ratingCookie = Cookies.get('lc-rating-reminder');
+                if (lcRatingReminder.ratingCookie !== undefined && lcRatingReminder.ratingCookie !== 'false') {
+                    if (LC_API.chat_running()) {
+                        lcRatingReminder.showRatingReminder(lcRatingReminder.ratingCookie);
+                    } else
+                        Cookies.remove('lc-rating-reminder');
+                } else {
+                    $('#lc-rating-reminder').hide();
+                }
+            },3000)
+        }
+    };
+    var ua = navigator.userAgent;
+    var mobile = /((Chrome).*(Mobile))|((Android).*)|((iPhone|iPod).*Apple.*Mobile)|((Android).*(Mobile))/i;
+    if(!mobile.test(ua))
+        lcRatingReminder.init();
+</script>
+
 </body>
 
 </html>
