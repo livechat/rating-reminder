@@ -4,7 +4,7 @@ Simple widget that reminds visitor to rate the chat.
 
 ## Getting Started
 
-Rating Reminder is external widget that you need to add to your website HTML source code. LiveChat tracking code has to be initialised before the widget. If you have any additional questiosn feel free to create [an issue](https://github.com/livechat/rating-reminder/issues) here.
+Rating Reminder is external widget that you need to add to your website HTML source code. LiveChat tracking code has to be initialised before the widget. If you have any additional questions feel free to create [an issue](https://github.com/livechat/rating-reminder/issues) here.
 
 ### Prerequisites
 
@@ -34,6 +34,10 @@ Remember to add theme-class to `#lc-rating-reminder` element, like below:
 
 ```
 <div id="lc-rating-reminder" class="smooth">
+    <img src="https://cdn.livechatinc.com/s3/3358262/all/thumbup.gif" alt="Rate us!">
+    <span>Rate this chat to help us become better support.</span>
+    <span id="lc-rating-reminder-close">+</span>
+</div>
 ```
 
 ## Changelog
