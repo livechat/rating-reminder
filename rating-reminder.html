@@ -1,143 +1,8 @@
-
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible"
-          content="IE=edge">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
-
-    <!-- Twitter card -->
-    <meta name="twitter:card"
-          content="summary" />
-    <meta name="twitter:title"
-          content="LiveChat Rating Reminder" />
-    <meta name="twitter:description"
-          content="Simple rating reminder widget for LiveChat chat window." />
-    <meta name="twitter:image"
-          content="https://cdn.livechatinc.com/s3/3358262/all/thumbup.gif" />
-
-    <!-- Open Graph -->
-    <meta name="og:title"
-          content="LiveChat Rating Reminder" />
-    <meta name="og:description"
-          content="Simple rating reminder widget for LiveChat chat window." />
-    <meta name="og:image"
-          content="https://cdn.livechatinc.com/s3/3358262/all/thumbup.gif" />
-
-    <link rel='shortcut icon'
-          type='image/gif'
-          href='https://cdn.livechatinc.com/s3/3358262/all/thumbup.gif' />
-
-    <title>LiveChat Rating Reminder</title>
-
-    <link rel="stylesheet" href="rating-reminder.css" />
-
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab:300');
-
-        body {
-            margin: 0px;
-        }
-
-        .container {
-            width: 100%;
-            height: 100%;
-            background-color: #dde2e6;
-        }
-
-        .left-column {
-            min-width: 320px;
-            width: 50%;
-            height: 100%;
-            background-color: #ffffff;
-        }
-
-        .content {
-            position: absolute;
-            min-width: 320px;
-            left: 10%;
-            right: 60%;
-            top: 10%;
-            bottom: 10%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .header {
-            font-family: 'Roboto Slab', serif;
-            font-size: 40px;
-            font-weight: 300;
-            text-align: left;
-            color: #5a6976;
-            margin-bottom: 8px;
-        }
-
-        .text {
-            font-family: 'Roboto', sans-serif;
-            font-size: 16px;
-            line-height: 1.38;
-            text-align: left;
-            max-width: 300px;
-            color: #5a6976;
-        }
-
-        .working-hours {
-            font-family: 'Roboto', sans-serif;
-            font-size: 16px;
-            line-height: 1.38;
-            text-align: left;
-            color: #5a6976;
-        }
-    </style>
-
-</head>
-
-<body>
-<div class="container">
-    <div class="left-column">
-        <div class="content">
-            <div class="logo">
-                <!-- Logo -->
-            </div>
-            <div class="text-container">
-                <div class="header">
-                    Rating Reminder
-                </div>
-                <div class="text">
-                    Start a chat and wait 10 seconds to see it in action!
-                </div>
-            </div>
-            <div class="working-hours">
-                <!-- Mon - Fri, 8 am - 4 pm CET -->
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- rating-reminder element -->
-<div id="lc-rating-reminder" class="smooth">
+<div id="lc-rating-reminder" class="theme-class">
     <img src="https://cdn.livechatinc.com/s3/3358262/all/thumbup.gif" alt="Rate us!">
     <span>Rate this chat to help us become better support.</span>
     <span id="lc-rating-reminder-close">+</span>
 </div>
-<!-- js-cookie lib -->
-<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!-- LiveChat tracking code -->
-<script type="text/javascript">
-    window.__lc = window.__lc || {};
-    window.__lc.license = 8656216;
-    (function() {
-        var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
-        lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
-    })();
-</script>
-<!-- Rating Reminder -->
 <script>
     window.lcRatingReminder = {
         ratingCookie: null,
@@ -258,10 +123,8 @@
     var ua = navigator.userAgent;
     var mobile = /((Chrome).*(Mobile))|((Android).*)|((iPhone|iPod).*Apple.*Mobile)|((Android).*(Mobile))/i;
 
+
+    // disable on mobile
     if(!mobile.test(ua))
         lcRatingReminder.init();
 </script>
-
-</body>
-
-</html>
