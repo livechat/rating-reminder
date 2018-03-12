@@ -182,7 +182,6 @@
             window.LC_API = window.LC_API || {};
 
             LC_API.on_after_load = function(){
-                console.log('test');
                 lcRatingReminder.mediaCheck();
                 lcRatingReminder.ratingCookie = window.localStorage.getItem('lc-rating-reminder');
                 if(LC_API.chat_running() && lcRatingReminder.ratingCookie === null) {
