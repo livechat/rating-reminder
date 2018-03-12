@@ -1,10 +1,10 @@
-# LiveChat Rating reminder
+# LiveChat Rating Reminder
 
 Simple widget that reminds visitor to rate the chat.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Rating Reminder is external widget that you need to add to your website HTML source code. LiveChat tracking code has to be initialised before the widget. If you have any additional questiosn feel free to create [an issue](https://github.com/livechat/rating-reminder/issues) here.
 
 ### Prerequisites
 
