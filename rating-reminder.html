@@ -9,6 +9,8 @@
         ratingTimeout: null,
         leftHeight: null,
         matchMediaLeft: null,
+        newThemeEnabled: false,
+        newWindowMax: 655,
         rateDelay: 180000,
 
         showRatingReminder: function(ratingCookieVar) {
@@ -26,27 +28,46 @@
         },
 
         mediaCheck: function() {
-            lcRatingReminder.leftHeight = $('#livechat-full').height();
-            lcRatingReminder.matchMediaLeft = window.matchMedia('(max-height:' + ((lcRatingReminder.leftHeight) + 75) + 'px)').matches;
+            if(lcRatingReminder.newThemeEnabled) {
+                var reminderElement = $('#lc-rating-reminder');
+                lcRatingReminder.matchMediaLeft = window.matchMedia('(max-height:' + (lcRatingReminder.newWindowMax)+ 'px)').matches;
+                if(lcRatingReminder.matchMediaLeft && reminderElement) {
+                    reminderElement.addClass('low');
+                } else {
+                    reminderElement.removeClass('low');
+                }
 
-            var reminderElement = $('#lc-rating-reminder.smooth, #lc-rating-reminder.circle');
-
-            if(lcRatingReminder.matchMediaLeft && reminderElement) {
-                reminderElement.addClass('left');
-                if (reminderElement.hasClass('smooth'))
-                    reminderElement.css('bottom', (lcRatingReminder.leftHeight - 7*14) + 'px');
-                else if (reminderElement.hasClass('circle'))
-                    reminderElement.css('bottom', (lcRatingReminder.leftHeight - 7.5*16) + 'px');
             } else {
-                reminderElement.removeClass('left');
-                reminderElement.css('bottom', '');
+                lcRatingReminder.leftHeight = $('#livechat-full').height();
+                lcRatingReminder.matchMediaLeft = window.matchMedia('(max-height:' + ((lcRatingReminder.leftHeight) + 75) + 'px)').matches;
+
+                var reminderElement = $('#lc-rating-reminder.smooth, #lc-rating-reminder.circle');
+
+                if(lcRatingReminder.matchMediaLeft && reminderElement) {
+                    reminderElement.addClass('left');
+                    if (reminderElement.hasClass('smooth'))
+                        reminderElement.css('bottom', (lcRatingReminder.leftHeight - 7*14) + 'px');
+                    else if (reminderElement.hasClass('circle'))
+                        reminderElement.css('bottom', (lcRatingReminder.leftHeight - 7.5*16) + 'px');
+                } else {
+                    reminderElement.removeClass('left');
+                    reminderElement.css('bottom', '');
+                }
             }
+        },
+
+        newThemeCheck: function() {
+            lcRatingReminder.newThemeEnabled = false;
+
+            if($('#chat-widget-container').length > 0)
+                lcRatingReminder.newThemeEnabled = true;
         },
 
         init: function() {
             window.LC_API = window.LC_API || {};
 
             LC_API.on_after_load = function(){
+                lcRatingReminder.newThemeCheck();
                 lcRatingReminder.mediaCheck();
                 lcRatingReminder.ratingCookie = window.localStorage.getItem('lc-rating-reminder');
                 if(LC_API.chat_running() && lcRatingReminder.ratingCookie === null) {
