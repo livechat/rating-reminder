@@ -65,6 +65,16 @@
     bottom: calc(638px - 0*16px);
 }
 
+#lc-rating-reminder.new {
+    right: calc(32px + 8.5*8px);
+    bottom: calc(638px - 3.125*16px);
+}
+
+#lc-rating-reminder.new.low {
+    top: 8px;
+    bottom: auto;
+}
+
 #lc-rating-reminder.smooth.left {
     right: calc( 268px + 3.5*16px );
     bottom: calc( 638px - 6.5*16px);
@@ -82,5 +92,14 @@
     border-bottom-left-radius: 0;
     border-top-right-radius: .375rem;
     transform: skewY(-45deg) rotate(45deg);
+}
+
+#lc-rating-reminder.new:before {
+    top: 50px;
+    right: 0;
+    left: auto;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: .375rem;
+    transform: skewY(40deg);
 }
 
