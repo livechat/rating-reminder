@@ -31,6 +31,7 @@ Currently our Rating Reminder supports 4 themes. Here is a list along with class
 2. Modern: `.modern`
 3. Circle: `.circle`
 4. Smooth: `.smooth`
+5. New chat window: `.new`
 
 **Note:** Remember to add theme class to `#lc-rating-reminder` element, like below:
 
@@ -43,6 +44,9 @@ Currently our Rating Reminder supports 4 themes. Here is a list along with class
 ```
 
 ## Changelog
+
+#### v 1.1.0
+- Added support for new LiveChat window
 
 #### v 1.0.0
 - First widget version
